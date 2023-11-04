@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자 소문자 구분
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fintech?serverTimezone=UTC&characterEncoding=UTF-8
+    username: fintech
+    password: fintech
+  redis:
+    host: localhost
+    port: 6379
