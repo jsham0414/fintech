@@ -1,24 +1,33 @@
 package com.example.api.configuration
 
-import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.info.Info
-import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import springfox.documentation.builders.ApiInfoBuilder
+import springfox.documentation.builders.PathSelectors
+import springfox.documentation.builders.RequestHandlerSelectors
+import springfox.documentation.service.ApiInfo
+import springfox.documentation.spi.DocumentationType
+import springfox.documentation.spring.web.plugins.Docket
 
 @Configuration
 class SwaggerConfig {
     @Bean
-    fun fintechApi(): GroupedOpenApi {
-        return GroupedOpenApi.builder()
-            .group("v0")
-            .packagesToScan("com.example.api")
-            .pathsToMatch("/**")
+    fun fintechApi(): Docket {
+        return Docket(DocumentationType.OAS_30)
+            .useDefaultResponseMessages(false)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.example"))
+            .paths(PathSelectors.any())
             .build()
+            .apiInfo(fintechOpenAPI())
     }
 
     @Bean
-    fun fintechOpenAPI(): OpenAPI {
-        return OpenAPI().info(Info().title("Fintech").description("대출 심사 API").version("v0.1"))
+    fun fintechOpenAPI(): ApiInfo {
+        return ApiInfoBuilder()
+            .title("Swagger")
+            .description("fintech api")
+            .version("0.0.1")
+            .build()
     }
 }

@@ -2,7 +2,6 @@ package com.example.api.loan.request
 
 import com.example.api.loan.KeyGenerator
 import com.example.api.loan.encrypt.EncryptComponent
-import com.example.domain.domain.UserInfo
 import com.example.domain.repository.UserInfoRepository
 import com.example.kafka.enum.KafkaTopic
 import com.example.kafka.producer.LoanRequestSender
@@ -20,7 +19,8 @@ class LoanRequestServiceImpl(
     ): LoanRequestDto.LoanRequestResponseDto {
         val userKey = keyGenerator.generateUserKey()
 
-        loanRequestInputDto.userRegistrationNumber = encryptComponent.encryptString(loanRequestInputDto.userRegistrationNumber)
+        loanRequestInputDto.userRegistrationNumber =
+            encryptComponent.encryptString(loanRequestInputDto.userRegistrationNumber)
 
         val userInfoDto = loanRequestInputDto.toUserInfoDto(userKey)
 

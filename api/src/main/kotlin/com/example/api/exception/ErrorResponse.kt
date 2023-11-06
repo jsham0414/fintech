@@ -19,8 +19,8 @@ class ErrorResponse(
     }
 
     data class ErrorResponseDto(
-        val errorCode : String,
-        val errorMessage : String
+        val errorCode: String,
+        val errorMessage: String
     ) {
         val timeStamp = LocalDateTime.now()
     }

@@ -1,24 +1,20 @@
-package com.example.api.loan.encrypt
+package com.example.security.aop
 
-import org.springframework.stereotype.Component
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-@Component
-class EncryptComponent {
-    companion object {
-        // AES 암호화를 위해 사용되는 키는 16, 24, 36 Byte여야 한다.
-        private const val secretKey = "12345678901234567890123456789012"
-    }
+class EncryptString {
+
+    // AES 암호화를 위해 사용되는 키는 16, 24, 36 Byte여야 한다.
+    private val secretKey = "12345678901234567890123456789012"
 
     private val encoder = Base64.getEncoder()
     private val decoder = Base64.getDecoder()
 
     fun encryptString(plainString: String): String {
-        val encryptedString =
-            ciperPkcs5(Cipher.ENCRYPT_MODE, secretKey).doFinal(plainString.toByteArray(Charsets.UTF_8))
+        val encryptedString = ciperPkcs5(Cipher.ENCRYPT_MODE, secretKey).doFinal(plainString.toByteArray(Charsets.UTF_8))
 
         return String(encoder.encode(encryptedString))
     }
@@ -36,4 +32,5 @@ class EncryptComponent {
         c.init(opMode, sk, iv)
         return c
     }
+
 }

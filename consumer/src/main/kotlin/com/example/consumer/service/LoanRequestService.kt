@@ -6,7 +6,6 @@ import com.example.domain.repository.LoanReviewRepository
 import com.example.kafka.dto.LoanRequestDto
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.stereotype.Service
-import org.springframework.web.client.postForEntity
 import java.time.Duration
 
 @Service
@@ -15,7 +14,7 @@ class LoanRequestService(
 ) {
     companion object {
         // 많아지면 따로 모듈을 만들어서 외부랑 통신하는 Rest Template나 Web Client만 모아두기
-        const val cssUrl = "http://localhost:8081/css/api/v1/request"
+        const val nginxUrl = "http://nginx:8085/css/api/v1/request"
     }
 
     fun loanRequest(loanRequestDto: LoanRequestDto) {
@@ -32,7 +31,7 @@ class LoanRequestService(
             .setReadTimeout(Duration.ofMillis(1000))
             .build()
 
-        return restTemplate.postForEntity(cssUrl, loanRequestDto, ReviewResponseDto::class.java).body!!
+        return restTemplate.postForEntity(nginxUrl, loanRequestDto, ReviewResponseDto::class.java).body!!
     }
 
     fun saveLoanReviewData(loanReview: LoanReview) = loanReviewRepository.save(loanReview)

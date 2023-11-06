@@ -1,6 +1,6 @@
 package com.example.domain.domain
 
-import jakarta.persistence.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "USER_INFO")
@@ -14,7 +14,7 @@ class UserInfo(
     @Column(name = "user_name")
     val userName: String,
 
-    @Column(name = "user_icn_amt")
+    @Column(name = "user_icm_amt")
     val userIncomeAmount: Long
 ) {
     @Id

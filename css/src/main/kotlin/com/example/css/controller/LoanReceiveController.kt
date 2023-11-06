@@ -16,7 +16,8 @@ class LoanReceiveController(
 ) {
     @PostMapping("/request")
     fun loanReceive(@RequestBody requestInputDto: LoanRequestDto.RequestInputDto)
-            :LoanResultDto.ResponseDto {
+            : LoanResultDto.ResponseDto {
+        println("!")
         return loanReviewService.loanReview(requestInputDto)
     }
 

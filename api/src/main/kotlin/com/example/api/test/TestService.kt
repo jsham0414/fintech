@@ -2,7 +2,6 @@ package com.example.api.test
 
 import com.example.domain.domain.UserInfo
 import com.example.domain.repository.UserInfoRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service

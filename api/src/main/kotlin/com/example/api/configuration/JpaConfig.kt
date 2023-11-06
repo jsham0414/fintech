@@ -1,9 +1,6 @@
 package com.example.api.configuration
 
-import com.example.domain.domain.UserInfo
-import com.example.domain.repository.UserInfoRepository
 import org.springframework.boot.autoconfigure.domain.EntityScan
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing

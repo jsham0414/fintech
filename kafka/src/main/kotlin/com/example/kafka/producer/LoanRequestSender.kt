@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 
+
 @Component
 class LoanRequestSender(
     private val kafkaTemplate: KafkaTemplate<String, String>,
@@ -13,6 +14,7 @@ class LoanRequestSender(
 ) {
     fun sendMessage(topic: KafkaTopic, loanRequestDto: LoanRequestDto) {
         kafkaTemplate.send(topic.topicName, objectMapper.writeValueAsString(loanRequestDto))
+
     }
     // fun (data class)
 }

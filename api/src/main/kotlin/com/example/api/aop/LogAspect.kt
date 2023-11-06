@@ -1,15 +1,12 @@
 package com.example.api.aop
 
 import mu.KotlinLogging
-import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.springframework.stereotype.Component
-import org.springframework.util.ObjectUtils
 import org.springframework.util.StopWatch
-import kotlin.text.StringBuilder
 
 @Aspect
 @Component
@@ -37,7 +34,7 @@ class LogAspect {
             }
         }
 
-        logger.info {"${joinPoint.signature.name} [${sb.dropLast(1)}] ${stopWatch.lastTaskTimeMillis}"}
+        logger.info { "${joinPoint.signature.name} [${sb.dropLast(1)}] ${stopWatch.lastTaskTimeMillis}" }
         return result;
     }
 }

@@ -3,23 +3,19 @@ package com.example.api.loan.request
 import com.example.api.loan.KeyGenerator
 import com.example.api.loan.encrypt.EncryptComponent
 import com.example.domain.domain.UserInfo
-import com.example.domain.repository.LoanReviewRepository
 import com.example.domain.repository.UserInfoRepository
+import com.example.kafka.producer.LoanRequestSender
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MockMvcBuilder
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
@@ -30,6 +26,9 @@ internal class LoanRequestControllerTest {
     private lateinit var loanRequestController: LoanRequestController
     private lateinit var keyGenerator: KeyGenerator
     private lateinit var encryptComponent: EncryptComponent
+
+    @MockBean
+    private lateinit var loanRequestSender: LoanRequestSender
 
     private val userInfoRepository: UserInfoRepository = mockk()
 
@@ -47,8 +46,9 @@ internal class LoanRequestControllerTest {
         keyGenerator = KeyGenerator()
         encryptComponent = EncryptComponent()
 
+
         loanRequestServiceImpl = LoanRequestServiceImpl(
-            keyGenerator, userInfoRepository, encryptComponent
+            keyGenerator, userInfoRepository, encryptComponent, loanRequestSender
         )
 
         loanRequestController = LoanRequestController(loanRequestServiceImpl)

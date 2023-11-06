@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/fintech/api/v1")
 class TestController(
-        private val testService: TestService
+    private val testService: TestService
 ) {
 
     @GetMapping("/test/get/{userKey}")
