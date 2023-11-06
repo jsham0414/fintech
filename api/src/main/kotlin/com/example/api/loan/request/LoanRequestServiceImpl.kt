@@ -1,7 +1,6 @@
 package com.example.api.loan.request
 
 import com.example.api.loan.KeyGenerator
-import com.example.api.loan.encrypt.EncryptComponent
 import com.example.domain.repository.UserInfoRepository
 import com.example.kafka.enum.KafkaTopic
 import com.example.kafka.producer.LoanRequestSender
@@ -11,17 +10,12 @@ import org.springframework.stereotype.Service
 class LoanRequestServiceImpl(
     private val keyGenerator: KeyGenerator,
     private val userInfoRepository: UserInfoRepository,
-    private val encryptComponent: EncryptComponent,
     private val loanRequestSender: LoanRequestSender
 ) : LoanRequestService {
     override fun loanRequestMain(
         loanRequestInputDto: LoanRequestDto.LoanRequestInputDto
     ): LoanRequestDto.LoanRequestResponseDto {
         val userKey = keyGenerator.generateUserKey()
-
-        loanRequestInputDto.userRegistrationNumber =
-            encryptComponent.encryptString(loanRequestInputDto.userRegistrationNumber)
-
         val userInfoDto = loanRequestInputDto.toUserInfoDto(userKey)
 
         saveUserInfo(userInfoDto)

@@ -1,5 +1,6 @@
 package com.example.domain.domain
 
+import com.example.domain.security.Encrypt
 import javax.persistence.*
 
 @Entity
@@ -8,6 +9,7 @@ class UserInfo(
     @Column(name = "user_key")
     val userKey: String,
 
+    @Encrypt
     @Column(name = "user_reg_num")
     val userRegistrationNumber: String,
 
