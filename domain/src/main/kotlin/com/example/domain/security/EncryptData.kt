@@ -1,6 +1,5 @@
 package com.example.domain.security
 
-import com.example.domain.domain.UserInfo
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -19,7 +18,8 @@ class EncryptData {
     private val encryptString = EncryptString()
 
     @Pointcut("execution(* com.example.domain.repository.*.save(*))")
-    private fun isSave() {}
+    private fun isSave() {
+    }
 
     @Around("isSave()")
     fun encrypt(joinPoint: ProceedingJoinPoint): Any {
@@ -49,7 +49,8 @@ class EncryptData {
     }
 
     @Pointcut("execution(* com.example.domain.repository.*.*find*(*))")
-    private fun isFind() {}
+    private fun isFind() {
+    }
 
     @Around("isFind()")
     fun decrypt(joinPoint: ProceedingJoinPoint): Any {

@@ -14,7 +14,8 @@ class EncryptString {
     private val decoder = Base64.getDecoder()
 
     fun encryptString(plainString: String): String {
-        val encryptedString = ciperPkcs5(Cipher.ENCRYPT_MODE, secretKey).doFinal(plainString.toByteArray(Charsets.UTF_8))
+        val encryptedString =
+            ciperPkcs5(Cipher.ENCRYPT_MODE, secretKey).doFinal(plainString.toByteArray(Charsets.UTF_8))
 
         return String(encoder.encode(encryptedString))
     }
