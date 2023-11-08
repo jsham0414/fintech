@@ -1,10 +1,7 @@
 package com.example.api.loan.request
 
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/fintech/api/v1")
@@ -16,5 +13,10 @@ class LoanRequestController(
         @RequestBody loanRequestInputDto: LoanRequestDto.LoanRequestInputDto
     ): ResponseEntity<LoanRequestDto.LoanRequestResponseDto> {
         return ResponseEntity.ok(loanRequestServiceImpl.loanRequestMain(loanRequestInputDto))
+    }
+
+    @GetMapping("/info/{userKey}")
+    fun getUserInfo(@PathVariable userKey: String): ResponseEntity<UserInfoDto> {
+        return ResponseEntity.ok(loanRequestServiceImpl.getUserInfo(userKey))
     }
 }

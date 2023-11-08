@@ -1,7 +1,6 @@
 package com.example.api.loan.request
 
 import com.example.api.loan.KeyGenerator
-import com.example.api.loan.encrypt.EncryptComponent
 import com.example.domain.domain.UserInfo
 import com.example.domain.repository.UserInfoRepository
 import com.example.kafka.producer.LoanRequestSender
@@ -25,7 +24,6 @@ internal class LoanRequestControllerTest {
 
     private lateinit var loanRequestController: LoanRequestController
     private lateinit var keyGenerator: KeyGenerator
-    private lateinit var encryptComponent: EncryptComponent
 
     @MockBean
     private lateinit var loanRequestSender: LoanRequestSender
@@ -44,11 +42,9 @@ internal class LoanRequestControllerTest {
     @BeforeEach
     fun init() {
         keyGenerator = KeyGenerator()
-        encryptComponent = EncryptComponent()
-
 
         loanRequestServiceImpl = LoanRequestServiceImpl(
-            keyGenerator, userInfoRepository, encryptComponent, loanRequestSender
+            keyGenerator, userInfoRepository, loanRequestSender
         )
 
         loanRequestController = LoanRequestController(loanRequestServiceImpl)
@@ -69,6 +65,7 @@ internal class LoanRequestControllerTest {
                 userIncomeAmount = 10000,
                 userRegistrationNumber = "000101-980512"
             )
+
 
         every {
             userInfoRepository.save(any())

@@ -28,6 +28,16 @@ class LoanRequestServiceImpl(
         userInfoRepository.save(userInfoDto.toEntity())
     }
 
+    override fun getUserInfo(userKey: String): UserInfoDto {
+        val info = userInfoRepository.findByUserKey(userKey)
+        return UserInfoDto(
+            userKey = info.userKey,
+            userRegistrationNumber = info.userRegistrationNumber,
+            userIncomeAmount = info.userIncomeAmount,
+            userName = info.userName
+        )
+    }
+
     override fun loanRequestReview(userInfoDto: UserInfoDto) {
         loanRequestSender.sendMessage(
             KafkaTopic.LOAN_REQUEST,

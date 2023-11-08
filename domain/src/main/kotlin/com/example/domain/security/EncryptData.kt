@@ -17,7 +17,7 @@ annotation class Encrypt
 class EncryptData {
     private val encryptString = EncryptString()
 
-    @Pointcut("execution(* com.example.domain.repository.*.save(*))")
+    @Pointcut("execution(* com.example.domain.repository.*.save*(*))")
     private fun isSave() {
     }
 
@@ -48,20 +48,19 @@ class EncryptData {
         return joinPoint.proceed(joinPoint.args)
     }
 
-    @Pointcut("execution(* com.example.domain.repository.*.*find*(*))")
+    @Pointcut("execution(* com.example.domain.repository.*.find*(*))")
     private fun isFind() {
     }
 
     @Around("isFind()")
     fun decrypt(joinPoint: ProceedingJoinPoint): Any {
-        // 옵셔널
         val targetData = joinPoint.proceed(joinPoint.args)
-        var targetOpt: Optional<*>? = null
-        if (targetData is Optional<*>)
-            targetOpt = targetData
-
-        // 널이면 그냥 원래 데이터 주기
-        val target: Any = targetOpt?.get() ?: return targetData
+        // 옵셔널인지 확인
+        val target: Any = if (targetData is Optional<*>) {
+            targetData.get()
+        } else {
+            targetData
+        }
 
         // 이제부터 UserInfo
         val fields: Array<Field> = target.javaClass.declaredFields
@@ -81,6 +80,7 @@ class EncryptData {
                     field.set(target, plainData)
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()
+                    return targetData
                 }
             }
         }
