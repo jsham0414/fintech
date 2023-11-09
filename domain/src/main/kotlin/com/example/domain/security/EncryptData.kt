@@ -40,11 +40,11 @@ class EncryptData {
                     field.set(target, encryptedData)
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()
+                    return joinPoint
                 }
             }
         }
 
-        joinPoint.args[0] = target
         return joinPoint.proceed(joinPoint.args)
     }
 
